@@ -4,7 +4,6 @@ import os
 
 
 import tensorflow as tf
-from tensorflow import kerbs
 
 import numpy as np
 
@@ -13,7 +12,7 @@ from prepare_model import prepareModel
 from fit_generator import fit
 from show_graphs import showGraphs
 from tune_model import tuneModel
-
+from save_model import saveModel
 
 def retrain(shouldTune=False, showGraph=False):
 
@@ -34,6 +33,8 @@ def retrain(shouldTune=False, showGraph=False):
 
     history = fit(model, epochs, train_generator, validation_generator)
 
+    saveModel(model, 'models/model.h5')
+
     if showGraph == True:
         showGraphs(history)
 
@@ -43,6 +44,8 @@ def retrain(shouldTune=False, showGraph=False):
                            epochs,
                            train_generator,
                            validation_generator)
+        saveModel(tunedModel, 'models/tuned_model.h5')
+
         if showGraph == True:
             showGraphs(tunedHistory)
 

@@ -1,4 +1,5 @@
 import tensorflow as tf
+from tensorflow import keras
 
 def prepareModel(image_size, channels):
     IMG_SHAPE = (image_size, image_size, channels)
@@ -26,7 +27,6 @@ def prepareModel(image_size, channels):
         optimizer=tf.keras.optimizers.RMSprop(lr=0.0001),
         loss='binary_crossentropy',
         metrics=['accuracy'])
-
     model.summary()
 
     return model, base_model
