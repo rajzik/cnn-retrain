@@ -6,6 +6,4 @@ import h5py
 def loadModel(path):
     model = keras.models.load_model(path)
 
-    model.sumary()
-
     return model

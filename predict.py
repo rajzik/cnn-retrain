@@ -15,11 +15,13 @@ def predictImage(filepath, tuned=False):
 
     img = loadImage(filepath)
 
-    predictions = model.predict(img)
-    prediction = np.argmax(predictions[0])
-
-    print(predictions)
-    print(prediction)
+    predictions = model.predict_classes(img)
+    prediction = predictions[0][0]
+    print(predictions[0])
+    if (prediction == 0):
+        print('Pussy')
+    else:
+        print('Dogo')
 
 
 
@@ -28,15 +30,15 @@ def parseArgs(argv):
     inputfile = ''
     tuned = False
     try:
-        opts, args = getopt.getopt(argv, "hti:", ["file=", "tuned"])
+        opts, args = getopt.getopt(argv, "htf:", ["file=", "tuned"])
     except getopt.GetoptError:
-        print('test.py -i <inputfile> -o')
+        print('test.py -f <inputfile> -o')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('test.py -i <inputfile> -t')
+            print('test.py -f <inputfile> -t')
             sys.exit()
-        elif opt in ("-i", "--file"):
+        elif opt in ("-f", "--file"):
             inputfile = arg
         elif opt in ("-t", "--tuned"):
             tuned = True

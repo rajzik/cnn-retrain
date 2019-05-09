@@ -1,4 +1,4 @@
-def fit(model, epochs, train_generator, validation_generator):
+def fit(model, epochs, train_generator, validation_generator, batch_size):
     steps_per_epoch = train_generator.n // batch_size
     validation_steps = validation_generator.n // batch_size
 
@@ -10,4 +10,4 @@ def fit(model, epochs, train_generator, validation_generator):
         validation_data=validation_generator,
         validation_steps=validation_steps)
 
-    return history
+    return history, model

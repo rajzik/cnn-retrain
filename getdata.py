@@ -1,6 +1,6 @@
 import os
 import tensorflow as tf
-
+from tensorflow import keras
 
 def getData(image_size, batch_size):
     zip_file = tf.keras.utils.get_file(origin="https://storage.googleapis.com/mledu-datasets/cats_and_dogs_filtered.zip",
@@ -39,13 +39,15 @@ def getData(image_size, batch_size):
         target_size=(image_size, image_size),
         batch_size=batch_size,
         # Since we use binary_crossentropy loss, we need binary labels
-        class_mode='binary')
+        class_mode='binary'
+        )
 
     # Flow validation images in batches of 20 using test_datagen generator
     validation_generator = validation_datagen.flow_from_directory(
         validation_dir,  # Source directory for the validation images
         target_size=(image_size, image_size),
         batch_size=batch_size,
-        class_mode='binary')
+        class_mode='binary'
+        )
 
     return train_generator, validation_generator

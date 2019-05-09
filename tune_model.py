@@ -1,5 +1,9 @@
+from tensorflow import keras
+
+
 def tuneModel(base_model, model):
     base_model.trainable = True
+
     print("Number of layers in the base model: ", len(base_model.layers))
 
     # Fine tune from this layer onwards
@@ -11,9 +15,11 @@ def tuneModel(base_model, model):
 
     model.compile(
         loss='binary_crossentropy',
-        optimizer=tf.keras.optimizers.RMSprop(lr=2e-5),
+        optimizer=keras.optimizers.RMSprop(lr=2e-5),
         metrics=['accuracy'])
 
     model.summary()
+
+    len(model.trainable_variables)
 
     return model

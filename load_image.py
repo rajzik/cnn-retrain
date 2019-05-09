@@ -1,9 +1,9 @@
-
+from tensorflow import keras
 import numpy as np
-import matplotlib.image as mpimg
 
 def loadImage(path):
-    img = mpimg.imread(path)
-    img = np.reshape(img, (160, 160))
+    img = keras.preprocessing.image.load_img(path, target_size=(160, 160))
+    img = keras.preprocessing.image.img_to_array(img)
+    img = img.reshape((1,) + img.shape)
 
     return img
