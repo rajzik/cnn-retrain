@@ -5,7 +5,6 @@ models = {
     'mobilenet': keras.applications.MobileNetV2,
     'resnet': keras.applications.InceptionResNetV2,
     'densenet': keras.applications.DenseNet201,
-    'nasnetlarge': keras.applications.NASNetLarge,
     'nasnetmobile': keras.applications.NASNetMobile,
 }
 
@@ -27,7 +26,7 @@ def prepareModel(image_size, channels, modelName = 'mobilenet'):
     base_model.trainable = False
 
     # Let's take a look at the base model architecture
-    base_model.summary()
+    # base_model.summary()
 
 
 
@@ -42,7 +41,7 @@ def prepareModel(image_size, channels, modelName = 'mobilenet'):
         loss='binary_crossentropy',
         optimizer=keras.optimizers.RMSprop(lr=0.0001),
         metrics=['accuracy'])
-    model.summary()
+    # model.summary()
     len(model.trainable_variables)
 
     return model, base_model

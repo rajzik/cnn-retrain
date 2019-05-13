@@ -16,7 +16,8 @@ def predictImage(filepath, tuned=False, modelName='mobilenet'):
     img = loadImage(filepath)
 
     predictions_classes = model.predict_classes(img)
-
+    predictions = model.predict(img)
+    print(predictions)
     prediction = predictions_classes[0][0]
     print(predictions_classes[0])
     if (prediction == 0):
@@ -39,7 +40,6 @@ def parseArgs(argv):
         print('\tmobilenet')
         print('\tresnet')
         print('\tdensenet')
-        print('\tnasnetlarge')
         print('\tnasnetmobile')
         sys.exit(2)
     for opt, arg in opts:
@@ -49,7 +49,6 @@ def parseArgs(argv):
             print('\tmobilenet')
             print('\tresnet')
             print('\tdensenet')
-            print('\tnasnetlarge')
             print('\tnasnetmobile')
             sys.exit()
         elif opt in ("-f", "--file"):

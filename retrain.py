@@ -31,7 +31,6 @@ def parseArgs(argv):
         print('\tmobilenet\n')
         print('\tresnet\n')
         print('\tdensenet\n')
-        print('\tnasnetlarge\n')
         print('\tnasnetmobile\n')
         sys.exit(2)
     for opt, arg in opts:
@@ -41,7 +40,6 @@ def parseArgs(argv):
             print('\tmobilenet')
             print('\tresnet')
             print('\tdensenet')
-            print('\tnasnetlarge')
             print('\tnasnetmobile')
             sys.exit()
         elif opt in ("-g", "--graph"):
