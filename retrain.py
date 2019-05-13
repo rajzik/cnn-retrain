@@ -22,28 +22,43 @@ def parseArgs(argv):
 
     graph = False
     tuned = False
+    model = 'mobilenet'
     try:
-        opts, args = getopt.getopt(argv, "htg", ["graph", "tuned"])
+        opts, args = getopt.getopt(argv, "htgm:", ["graph", "tuned", "model="])
     except getopt.GetoptError:
-        print('retrain.py -t -g')
+        print('retrain.py -t -g -m mobilenet \n')
+        print('Models: \n')
+        print('\tmobilenet\n')
+        print('\tresnet\n')
+        print('\tdensenet\n')
+        print('\tnasnetlarge\n')
+        print('\tnasnetmobile\n')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('test.py -i <inputfile> -t')
+            print('retrain.py -t -g -m mobilenet')
+            print('Models:')
+            print('\tmobilenet')
+            print('\tresnet')
+            print('\tdensenet')
+            print('\tnasnetlarge')
+            print('\tnasnetmobile')
             sys.exit()
         elif opt in ("-g", "--graph"):
-            graph = arg
+            graph = True
         elif opt in ("-t", "--tuned"):
             tuned = True
+        elif opt in ('-m', '--model'):
+            model = arg
 
-    return graph, tuned
+    return graph, tuned, model
 
 
-def retrain(graph=False, tuned=False):
+def retrain(graph=False, tuned=False, modelName='mobilenet'):
 
     print("TensorFlow version is ", tf.__version__)
     # Image props
-    image_size = 160  # All images will be resized to 160x160
+    image_size = 224  # All images will be resized to 224x224
     batch_size = 32
     channels = 3
 
@@ -52,7 +67,7 @@ def retrain(graph=False, tuned=False):
     print('Fetching Data')
     train_generator, validation_generator = getData(image_size, batch_size)
     print('Preparing model')
-    model, base_model = prepareModel(image_size, channels)
+    model, base_model = prepareModel(image_size, channels, modelName)
 
     len(model.trainable_variables)
     print('Retraining model')
@@ -60,7 +75,7 @@ def retrain(graph=False, tuned=False):
                   validation_generator, batch_size)
 
     print('Saving model')
-    saveModel(model, 'models/model.h5')
+    saveModel(model, f'models/{modelName}-model.h5')
 
     if graph == True:
         showGraphs(history)
@@ -72,12 +87,12 @@ def retrain(graph=False, tuned=False):
                            train_generator,
                            validation_generator,
                            batch_size)
-        saveModel(tunedModel, 'models/tuned_model.h5')
+        saveModel(tunedModel, f'models/tuned_{modelName}-model.h5')
 
         if graph == True:
             showGraphs(tunedHistory)
 
 
 if __name__ == "__main__":
-    graph, tuned = parseArgs(sys.argv[1:])
-    retrain(graph, tuned)
+    graph, tuned, model = parseArgs(sys.argv[1:])
+    retrain(graph, tuned, model)
